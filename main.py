@@ -1,6 +1,5 @@
-
 try:
-    import flask
+	import flask
 	import midi
 	import cv2 as cv
 	import imutils
