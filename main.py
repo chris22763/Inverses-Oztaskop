@@ -1,63 +1,68 @@
-try:
-	import flask
-	import midi
-	import cv2 as cv
-	import imutils
-	import numpy as np
-	from os import listdir
-	from os.path import isfile, join
+import os
+import random
+import midi
+import cv2 as cv
+import imutils
+import numpy as np
+from os import listdir
+from os.path import isfile, join
+from flask import Flask, render_template, request, send_from_directory, redirect, url_for, session, escape
 
-except Exception as e:
-    print("you need to install some packages")
+app = Flask(__name__, static_url_path='/static')
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+app.config.from_object(__name__)
+app.secret_key = os.urandom(24)
 
 
+NSIZE =  16
+OCIMGX = 848
+OCIMGY = 480
+NEIMGX = OCIMGX / NSIZE
+NEIMGY = OCIMGY / NSIZE
 
-def create_server():
+OCIMGSIZE = (OCIMGX, OCIMGY)
+NEIMGSIZE = (NEIMGX, NEIMGY)
+
+
+def webserver_init():
     pass
 
-def minmaxpull(img, ocimgsize, neimgsize):
-    pass
-
-def main():
-    pass
-
-
-path_to_vid = './data/video_files/'
-path_to_img = './data/img/'
-
-
-video_files = [f for f in listdir(path_to_vid) if isfile(join(path_to_vid, f))]
-
-def shrink(img, nsize, imgSize, output=0, resize=False): #output: 0 => max/ 1 => min
-
+def resize_frame(img, nsize, imgSize, output=0, resize=False): #output: 0 => max/ 1 => min):
     cropedimg = np.zeros((nrow,ncol))
 
 
-    for x in range(int (ncol)):
-        for y in range(int (nrow)):
+    for x in range(newImgSize[0]):
+        for y in range(newImgSize[1]):
+            x0 = (x * NSIZE)
+            y0 = (y * NSIZE)
 
-            x0 = (x * nsize)
-            y0 = (y * nsize)
+            x1 = (x * NSIZE) + (NSIZE-1)
+            y1 = (y * NSIZE) + (NSIZE-1)
 
-            x1 = (x * nsize) + (nsize-1)
-            y1 = (y * nsize) + (nsize-1)
-
-            #cropedimg.append(img[y0:y1, x0:x1])
             mask = img[y0:y1, x0:x1]
-            minMax = cv.minMaxLoc(mask)
-            if output == 0:
-                if minMax[0] != 0:
-                    val = 1 / minMax[0]
-                else:
-                    val = 0
-            elif output == 1:
-                val = 1/minMax[1]
+            minMax = cv2.minMaxLoc(mask)
+            val = 1 / minMax[1]
+
             cropedimg[y][x] = val
-
-
 
     return cropedimg
 
+
+def get_ch_from_frame(img):
+    r, g, b, gray = 0
+
+    b, g, r = cv.split(img)
+    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+
+    gray = resize_frame(gray, NEIMGSIZE, OCIMGSIZE)
+    r = resize_frame(r, NEIMGSIZE, OCIMGSIZE)
+    g = resize_frame(g, NEIMGSIZE, OCIMGSIZE)
+    b = resize_frame(b, NEIMGSIZE, OCIMGSIZE)
+
+    return r, g, b, gray
+
+#todo make this shit work
 def get_frames(cap):
     count = 0
     data = []
@@ -68,7 +73,7 @@ def get_frames(cap):
         if count > 500:
             break
         if ret:
-            #todo make this shit work
+
             data.append(img)  # save frame as JPEG file
             ret, img = cam.read()
             count += 1
@@ -77,67 +82,26 @@ def get_frames(cap):
 
     return data
 
+def send_data(data, ip, port):
+    pass
+
+def convert_data():
+    pass
 
 
-def get_channels(frame, nsize, imgSize):
-    b, g, r = cv.split(frame)
-    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+@app.route('/', methods = ['GET', 'POST'])
+def index():
 
-    grey_crop = shrink(gray, nsize, imgSize)
-    red_crop = shrink(r, nsize, imgSize)
-    green_crop = shrink(g, nsize, imgSize)
-    blue_crop = shrink(b, nsize, imgSize)
-
-    return grey_crop, red_crop, green_crop, blue_crop
+    session['user_id'] = str(random.randint(0, 1000000000))
 
 
+    if request.method == 'POST':
+        pass
 
-
-cam = cv.VideoCapture(path_to_vid + video_files[0])
-
-frames = get_frames(cam)
-
-
-
-nsize = 8
-nrow, ncol = 160 , 80
-c = 0
-count = 0
-ret, img = cam.read()
+    return render_template('intro.html')
 
 
 
-
-#todo why se fuck is sis not w*rking
-cap = cv.VideoCapture(frames[count])
-ret, frame = cap.read()
-
-imgSize = frame.shape
-nrow = int(imgSize[0] / nsize)
-ncol = int(imgSize[1] / nsize)
-
-
-
-
-if cap.isOpened() == False:
-    print("Error opening video stream or file")
-
-while (cap.isOpened()):
-    cv.imshow("img", frame)
-
-    grey_crop, red_crop, green_crop, blue_crop = get_channels(frame, nsize, imgSize)
-
-    gray = imutils.resize(grey_crop, width=imgSize[1])
-
-    count += 1
-
-else:
-    print("Error opening video stream or file")
-
-
-cap.release()
-cv.destroyAllWindows()
-
-
-if __name__ == '__main__':
-        main()
+def main():
+    if __name__ == '__main__':
+        app.run(debug = True, threaded = True)
