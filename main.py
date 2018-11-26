@@ -2,7 +2,6 @@ import os
 import random
 import midi
 import cv2 as cv
-import imutils
 import numpy as np
 from os import listdir
 from os.path import isfile, join
@@ -96,12 +95,16 @@ def index():
 
 
     if request.method == 'POST':
-        pass
+        print(request.form)
 
-    return render_template('intro.html')
+    print("test")
+    return render_template('index.html')
 
 
 
 def main():
     if __name__ == '__main__':
         app.run(debug = True, threaded = True)
+
+
+main()
