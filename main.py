@@ -15,9 +15,9 @@ app.config.from_object(__name__)
 app.secret_key = os.urandom(24)
 
 
-NSIZE =  16
-OCIMGX = 848
-OCIMGY = 480
+NSIZE =  40
+OCIMGX = 1920
+OCIMGY = 1080
 NEIMGX = OCIMGX / NSIZE
 NEIMGY = OCIMGY / NSIZE
 
@@ -29,11 +29,11 @@ def webserver_init():
     pass
 
 def resize_frame(img, nsize, imgSize, output=0, resize=False): #output: 0 => max/ 1 => min):
-    cropedimg = np.zeros((nrow,ncol))
+    cropedimg = np.zeros((NEIMGX,NEIMGY))
 
 
-    for x in range(newImgSize[0]):
-        for y in range(newImgSize[1]):
+    for x in range(NEIMGX):
+        for y in range(NEIMGY):
             x0 = (x * NSIZE)
             y0 = (y * NSIZE)
 
