@@ -91,7 +91,6 @@ def convert_data():
 
             c += 1
             if c == 90:
-                print("next frame")
                 r, g, b, k = get_ch_from_frame(frame)
                 c = 0
                 out = output_list(out, (r, g, b, k))
