@@ -11,12 +11,12 @@ import multiprocessing
 
 
 PATH = "./static/video_files/CGI_Animated_Short_Film_The_Box_La_Boîte_by_ESMA_CGMeetup.mp4"
-
-NSIZE =  40
 OCIMGX = 1280
 OCIMGY = 720
-NEIMGX = int(OCIMGX / NSIZE)
-NEIMGY = int(OCIMGY / NSIZE)
+NSIZEY =  (OCIMGX / 16)
+NSIZEX =  (OCIMGX / 8)
+NEIMGX = int(OCIMGX / NSIZEX)
+NEIMGY = int(OCIMGY / NSIZEY)
 
 OCIMGSIZE = (OCIMGX, OCIMGY)
 NEIMGSIZE = (NEIMGX, NEIMGY)
@@ -31,27 +31,33 @@ app.secret_key = os.urandom(24)
 cap = cv2.VideoCapture(PATH)
 loaded = False
 
-def resize_frame(img, nsize, imgSize, output=0, resize=False): #output: 0 => max/ 1 => min):
+def resize_frame(img, nsize, imgSize, output=2, resize=False): #output: 0 => max/ 1 => min):
     cropedimg = np.zeros((NEIMGY, NEIMGX))
 
     for x in range(NEIMGX):
         for y in range(NEIMGY):
-            x0 = (x * NSIZE)
-            y0 = (y * NSIZE)
+            x0 = (x * NSIZEX)
+            y0 = (y * NSIZEY)
 
-            x1 = (x * NSIZE) + (NSIZE-1)
-            y1 = (y * NSIZE) + (NSIZE-1)
+            x1 = (x * NSIZEX) + (NSIZEX-1)
+            y1 = (y * NSIZEY) + (NSIZEY-1)
 
             mask = img[y0:y1, x0:x1]
-            minMax = cv2.minMaxLoc(mask)
-            if minMax[0] != 0:
-                val = 1 / minMax[0]
+
+            if output == 2:
+                minMaxMean = cv2.mean(mask)
+            else:
+                minMaxMean = cv2.minMaxLoc(mask)
+
+            if minMaxMean[output] != 0:
+                val = 1 / minMaxMean[output]
             else:
                 val = 0
 
             cropedimg[y][x] = val
 
     return cropedimg
+
 
 
 def get_ch_from_frame(img):
@@ -85,6 +91,7 @@ def convert_data():
 
             c += 1
             if c == 90:
+                print("next frame")
                 r, g, b, k = get_ch_from_frame(frame)
                 c = 0
                 out = output_list(out, (r, g, b, k))
@@ -96,17 +103,24 @@ def convert_data():
 
         except:
             break
-
+    return out
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
     global loaded
     session['user_id'] = str(random.randint(0, 1000000000))
 
-    convert_data()
+
+    #convert_data()
 
     if request.method == 'POST':
-        pass
+        if loaded:
+            print("calculate")
+            sound  = convert_data()
+            #p = multiprocessing.Pool(1)
+            #result = p.apply_async(convert_data)
+            return render_template('index.html', sound_list=sound)
+        loaded = True
 
     return render_template('index.html')
 
