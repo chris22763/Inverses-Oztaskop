@@ -88,7 +88,6 @@ def convert_data():
     while True:
         try:
             ret, frame = cap.read()
-
             c += 1
             if c == 90:
                 r, g, b, k = get_ch_from_frame(frame)
@@ -102,6 +101,7 @@ def convert_data():
 
         except:
             break
+    print(out)
     return out
 
 @app.route('/', methods = ['GET', 'POST'])
