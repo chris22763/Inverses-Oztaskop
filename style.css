@@ -1,0 +1,36 @@
+
+html, body {
+    padding: 0; margin: 0;
+    text-align: center;
+    background:#238b6c;
+    color: #e7df81;
+}
+
+div {
+    font-family: monospace;
+    font-size: 1.5em;
+}
+
+select {
+    font-family: monospace;
+    padding: 0.5em 1.5em;
+    background-color: #d4c844;
+    font-size: 0.8em; 
+}
+
+#message1 {
+    font-size: 2em;
+}
+
+#play {
+    font-family: monospace;
+    background-color: #d4c844;
+    border: none;
+    color: #238b6c;
+    font-size: 1.8em;
+    padding: 0.5em 1.5em;
+}
+
+#play:active {
+   background: #ffffff;
+}
