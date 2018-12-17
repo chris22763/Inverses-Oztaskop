@@ -11,13 +11,6 @@ div {
     font-size: 1.5em;
 }
 
-select {
-    font-family: monospace;
-    padding: 0.5em 1.5em;
-    background-color: #d4c844;
-    font-size: 0.8em; 
-}
-
 #message1 {
     font-size: 2em;
 }

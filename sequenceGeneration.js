@@ -6,15 +6,15 @@ SEQUENCE_LENGTH = NUM_REPS * STEPS_PER_PROG;
 // Set up Improv RNN model and player.
 const model = new mm.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/chord_pitches_improv');
 const player = new mm.SoundFontPlayer('https://storage.googleapis.com/magentadata/js/soundfonts/sgm_plus');
-let playing = false;
 
-let count = 0;
-
+// sequence to continue
 let seq = { 
   quantizationInfo: {stepsPerQuarter: 4},
   notes: [],
   totalQuantizedSteps: 1
 };  
+
+let count = 0;
 
 // Sample over chord progression.
 function continueSequence(currentChords, leadInstrument, bassInstrument, playIt) {
@@ -69,59 +69,37 @@ function continueSequence(currentChords, leadInstrument, bassInstrument, playIt)
  
       if(playIt) {
 
-        seq.notes.forEach((note) => {
-          //console.log(note);
-        });
+        player.loadSamples(seq).then(() => {
 
-        // Play it!
-        player.start(seq, 120).then(() => {
-          playing = false;
-          document.getElementById('message1').innerText = 'Press play to generate a new sequence!';
-          document.getElementById('play').disabled = false;
-          count = 0;
-          seq = { 
-            quantizationInfo: {stepsPerQuarter: 4},
-            notes: [],
-            totalQuantizedSteps: 1
-          };         
-        });
+          // start video here
+
+          player.start(seq, 120).then(() => {
+            document.getElementById('play').disabled = false;
+            count = 0;
+            seq = { 
+              quantizationInfo: {stepsPerQuarter: 4},
+              notes: [],
+              totalQuantizedSteps: 1
+            };         
+          });
+        });      
       }
-    });
+  });
 }  
 
 // Populate chord-arrays and call continueSequence
-function startChords(howManyTimes, leadInstrument, bassInstrument) {
+function startChords(chordArray, leadInstruments, bassInstruments) {
 
-  const scales = Tonal.Scale.names(); // Array 0-90 ("bebop", "flamenco", ...)
-  const notes = Tonal.Note.names(); // Array 0-16 ("C", "C#", "Db", ...)
+  for (let i = 0; i < (chordArray.length / 4); i++) {
 
-  for (let i = 0; i < howManyTimes; i++) {
+    const chordProgression = chordArray.slice(i*4, i*4+4);
 
-    const chordArray = [];
-    const rnd1 = Math.floor(Math.random() * scales.length); // random number between 0-90
-    const fittingChords = Tonal.Scale.chords(scales[rnd1]); // Array of varying size with fitting chords for the given scale  
-    console.log(scales[rnd1]);
-
-    for (let j = 0; j < 4; j++) {
-    
-      const rnd2 = Math.floor(Math.random() * notes.length); // random number between 0-16
-      const rnd3 = Math.floor(Math.random() * fittingChords.length);
-
-      const chord = notes[rnd2] + fittingChords[rnd3];
-
-      chordArray.push(chord);
-    
+    if(i == ((chordArray.length / 4) - 1)) {
+      
+      continueSequence(chordProgression, leadInstruments[i], bassInstruments[i], true);
     }
-
-    console.log(chordArray);
-    var elementID = 'message' + (i+2);
-    document.getElementById(elementID).innerText = scales[rnd1] + ': ' + chordArray;
-  
-    if(i == (howManyTimes - 1)) { 
-      continueSequence(chordArray, leadInstrument, bassInstrument, true); // Play the sequence!
-    }
-    else { 
-      continueSequence(chordArray, leadInstrument, bassInstrument); 
+    else {
+      continueSequence(chordProgression, leadInstruments[i], bassInstruments[i]);
     }
   }
 }
@@ -134,14 +112,9 @@ model.initialize().then(() => {
 
 // Play when play button is clicked.
 document.getElementById('play').onclick = () => {
-  playing = true;
+
   document.getElementById('play').disabled = true; 
-  document.getElementById('message1').innerText = 'Improvising over:';
-
-  let leadInstrument = parseInt(document.getElementById('lead-dropdown').value);
-  let bassInstrument = parseInt(document.getElementById('bass-dropdown').value);
-
   mm.Player.tone.context.resume();
   player.stop();
-  startChords(3, leadInstrument, bassInstrument);
+  startChords(finalChords, leadInstruments, bassInstruments);
 }
