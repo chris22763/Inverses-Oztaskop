@@ -167,7 +167,7 @@ def index():
 
         loaded = True
 
-    return render_template('index.html', sound_list=sound, video_path=video_path)
+    return render_template('index_page.html', sound_list=sound, video_path=video_path)
 
 
 
