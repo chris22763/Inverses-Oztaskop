@@ -28,10 +28,10 @@ data = {
     4: [[[18, 88, 106], [76, 83, 0], [7, 5, 4], [80, 0, 14], [3, 24, 58]], [[9, 5, 4], [5, 32, 59], [79, 83, 0], [91, 0, 23], [28, 96, 123]], [[59, 148, 142], [125, 121, 0], [6, 6, 6], [8, 56, 105], [125, 0, 47]], [[1, 1, 1], [49, 0, 14], [14, 56, 50], [0, 14, 55], [56, 50, 0]], [[122, 115, 0], [111, 142, 132], [13, 13, 14], [14, 92, 112], [114, 0, 90]], [[59, 132, 139], [11, 9, 9], [98, 0, 58], [15, 46, 65], [89, 94, 0]]]
 }
 paths = {
-    0: './static/video_files/short_test.mp4',
+    0: 'path for the clips',
     1: './static/video_files/short_test.mp4',
     2: './static/video_files/game_short.mp4',
-    3: './static/video_files/blade_runner_short.mp4',
+    3: './static/video_files/blade_runner.mp4',
     4: './static/video_files/LOTR.mp4'
 }
 
