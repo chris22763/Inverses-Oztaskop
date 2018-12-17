@@ -26,6 +26,21 @@ p{
     left: 5%;
 }
 
+#play_container{
+    position: absolute;
+    float:left;
+    bottom: 30%;
+    left: -20px;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    padding-left: 30px;
+    border-radius: 0px 15px 15px 0px;
+    background-color: rgba(0, 77, 253, 1);
+    box-shadow: 20px 20px rgba(0, 77, 253, 0.7)
+}
+
+
 #select{
     position: absolute;
     float:left;
