@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 PATH = "./static/video_files/short_test.mp4"
-<<<<<<< HEAD
+
 
 video_clips = {
     'short_test' : ["./static/video_files/short_test.mp4", 24, 16, 1280, 720],
@@ -21,8 +21,6 @@ video_clips = {
     'game': ["./static/video_files/game.mp4", 24, 272, 1280, 720]
 }
 
-=======
->>>>>>> parent of ed8ec07... more Data
 OCIMGX = 1280
 OCIMGY = 720
 NSIZEY =  int(OCIMGY / 45)
@@ -78,60 +76,6 @@ def combine_img_part(new_img, last_img):
     return vis
 
 
-def convert_data_old():
-
-    c = 0
-    out = []
-    cacher = [[]]
-    cacheg = [[]]
-    cacheb = [[]]
-    cachek = [[]]
-    ret, frame = cap.read()
-    r1, g1, b1, k1 = get_ch_from_frame(frame)
-    visb1 = None
-
-    while True:
-
-        ret, frame = cap.read()
-        c += 1
-        r, g, b, k = get_ch_from_frame(frame)
-
-        if c % 2==0:
-            visr = combine_img(r, r1)
-            visg = combine_img(g, g1)
-            visb = combine_img(b, b1)
-            visk = combine_img(k, k1)
-
-
-            if visb1 is not None:
-                t = combine_img(visr, visr1)
-
-            visr1 = visr
-            visg1 = visg
-            visb1 = visb
-            visk1 = visk
-
-
-
-        #out = output_list(out, (r, g, b, k))
-        #cv2.imshow("k", k)
-
-        # cacher, c, outr = mean_data_over_time(r, cacher, c)
-        # cacheg, c, outg = mean_data_over_time(g, cacheg, c)
-        # cacheb, c, outb = mean_data_over_time(b, cacheb, c)
-        # cachek, c, outk = mean_data_over_time(k, cachek, c)
-        #
-        # out = output_list(out, (outr, outg, outb, outk))
-
-        if cv2.waitKey(1) == ord("q"):
-            break
-
-        r1, g1, b1, k1 = get_ch_from_frame(frame)
-
-    return out
-
-
-
 def convert_data():
 
     c = 0
@@ -182,6 +126,9 @@ def convert_data():
 @app.route('/', methods = ['GET', 'POST'])
 def index():
     global loaded
+
+    sound = []
+
     session['user_id'] = str(random.randint(0, 1000000000))
 
 
@@ -192,10 +139,10 @@ def index():
             sound  = convert_data()
             #p = multiprocessing.Pool(1)
             #result = p.apply_async(convert_data)
-            return render_template('index.html', sound_list=sound)
+
         loaded = True
 
-    return render_template('index.html')
+    return render_template('index.html', sound_list=sound)
 
 
 
