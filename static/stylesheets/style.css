@@ -15,14 +15,6 @@ html {
 #waterfall{
 }
 
-#clip-banner{
-    box-shadow : 20 20 rgba(0, 77, 253, 0.7), 20 20 rgba(0, 77, 253, 0.7)
-}
-
-#selector-Box{
-    box-shadow : rgba(0,77,253,0.7)
-}
-
 /*the container must be positioned relative:*/
 .custom-select {
   position: relative;

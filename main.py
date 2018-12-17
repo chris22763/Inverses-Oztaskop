@@ -12,19 +12,23 @@ import matplotlib.pyplot as plt
 
 
 
-PATH = "./static/video_files/game.mp4"
+PATH = "./static/video_files/short_test.mp4"
+<<<<<<< HEAD
+
 video_clips = {
     'short_test' : ["./static/video_files/short_test.mp4", 24, 16, 1280, 720],
     'luxor_jr': ["./static/video_files/short_test.mp4", 30, 96, 1184, 720],
     'game': ["./static/video_files/game.mp4", 24, 272, 1280, 720]
 }
 
+=======
+>>>>>>> parent of ed8ec07... more Data
 OCIMGX = 1280
 OCIMGY = 720
+NSIZEY =  int(OCIMGY / 45)
+NSIZEX =  int(OCIMGX / 40)
 NEIMGX = 45 # redundant ==> 16
 NEIMGY = 40 # ==> 8
-NSIZEX =  int(OCIMGX / NEIMGX)
-NSIZEY =  int(OCIMGY / NEIMGY)
 
 OCIMGSIZE = (OCIMGX, OCIMGY)
 NEIMGSIZE = (NEIMGX, NEIMGY)
@@ -38,21 +42,6 @@ app.secret_key = os.urandom(24)
 
 cap = cv2.VideoCapture(PATH)
 loaded = False
-
-def create_select(r):
-    html = '<div class="custom-select" style="width:200px;">' \
-           '\n<select name="select" formmethod="POST" onChange="document.form.submit()">'
-    for s in video_clips:
-        html += '<option value='
-
-
-        if s == r:
-            pass
-
-        html += '</option>'
-
-    return html
-
 
 def resize_frame(img): #output: 0 => max/ 1 => min):
     cropedimg = np.zeros((NEIMGY, NEIMGX, 4), 'uint8')
@@ -87,6 +76,60 @@ def combine_img_part(new_img, last_img):
     vis[0][1] = last_img
 
     return vis
+
+
+def convert_data_old():
+
+    c = 0
+    out = []
+    cacher = [[]]
+    cacheg = [[]]
+    cacheb = [[]]
+    cachek = [[]]
+    ret, frame = cap.read()
+    r1, g1, b1, k1 = get_ch_from_frame(frame)
+    visb1 = None
+
+    while True:
+
+        ret, frame = cap.read()
+        c += 1
+        r, g, b, k = get_ch_from_frame(frame)
+
+        if c % 2==0:
+            visr = combine_img(r, r1)
+            visg = combine_img(g, g1)
+            visb = combine_img(b, b1)
+            visk = combine_img(k, k1)
+
+
+            if visb1 is not None:
+                t = combine_img(visr, visr1)
+
+            visr1 = visr
+            visg1 = visg
+            visb1 = visb
+            visk1 = visk
+
+
+
+        #out = output_list(out, (r, g, b, k))
+        #cv2.imshow("k", k)
+
+        # cacher, c, outr = mean_data_over_time(r, cacher, c)
+        # cacheg, c, outg = mean_data_over_time(g, cacheg, c)
+        # cacheb, c, outb = mean_data_over_time(b, cacheb, c)
+        # cachek, c, outk = mean_data_over_time(k, cachek, c)
+        #
+        # out = output_list(out, (outr, outg, outb, outk))
+
+        if cv2.waitKey(1) == ord("q"):
+            break
+
+        r1, g1, b1, k1 = get_ch_from_frame(frame)
+
+    return out
+
 
 
 def convert_data():
@@ -145,11 +188,6 @@ def index():
     #convert_data()
 
     if request.method == 'POST':
-        p = request.form
-        print(p)
-        if request.form == '':
-            pass
-
         if loaded:
             sound  = convert_data()
             #p = multiprocessing.Pool(1)
