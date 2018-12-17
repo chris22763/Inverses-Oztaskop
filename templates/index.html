@@ -11,43 +11,54 @@
 
         <script type="text/javascript">
 			window.appConfig = {
-			    sound_list: {{ sound_list | safe}},
-			    test_list: [[[85, 129, 178], [83, 129, 0], [18, 62, 101], [133, 0, 55], [18, 23, 22]], [[60, 107, 0], [10, 35, 63], [14, 16, 14], [40, 73, 123], [101, 0, 35]]],
+			    sound_list: {{sound_list | safe}}
 			};
 		</script>
 
 
     </head>
     <body>
-        <form>
-            <input type="submit" id="submit" class="inputfile submit" onclick="check()" formmethod="POST" value="test">
-            <label for="submit" class="button submit" value="lable">submit</label>
+        <div id="text">
+            <p>18.December 2018</p>
+            <div class="line blue"> </div>
+            <h>Inverses Oztaskop</h>
+            <p>“Haben sie eine Vorstellung wie schön gute Musik aussieht </p>
+            <p>und wie hässlich schlechte Musik ist?” (Dr. Kolibril)</p>
+        </div>
+
+        <div id="select">
+            <form name="form1" id="form1">
+                <input type="submit" id="submit" class="input submit" onclick="check()" formmethod="POST" value="test">
+                <label id="submitlabel" for="submit" class="button submit" value="lable">submit</label>
 
 
-            <!--surround the select box with a "custom-select" DIV element. Remember to set the width:-->
-            <div class="custom-select" style="width:200px;">
-                <select name="select" formmethod="POST" onChange="document.form.submit()">
-                    <option value="0">Select a Clip:</option>
-                    <option value="1">Light_themed</option>
-                    <option value="2">Dark_themed</option>
-                </select>
+                <!--surround the select box with a "custom-select" DIV element. Remember to set the width:-->
+                <div class="custom-select bar" style="width:200px;">
+                    <select name="select" formmethod="POST" onchange="document.form1.submit()">
+                        <option value="0">Select a Clip:</option>
+                        <option value="1">short test</option>
+                        <option value="2">Gerri's Game</option>
+                        <option value="3">Blade Runner</option>
+                    </select>
+                </div>
+            </form>
+
+        </div>
+
+
+        <div id="waterfall">
+
+            <div>
+                <video id="clip" controls>
+                    <source src=".{{video_path}}" type="video/mp4">
+                </video>
             </div>
 
-        </form>
-
-
-        <div id="clips">
-            <video width="400" controls>
-                <source src="../static/video_files/short_test.mp4" type="video/mp4">
-            </video>
         </div>
+
+
         
         <script type="text/javascript" src="../static/js/select.js"></script>
-
-            <label for="submit" class="button submit" value="lable">test</label>
-            <div>{{ sound_list | safe}}</div>
-
-        </form>
 
     </body>
 </html>
