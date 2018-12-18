@@ -72,15 +72,27 @@ function continueSequence(currentChords, leadInstrument, bassInstrument, playIt)
         player.loadSamples(seq).then(() => {
 
           // start video here
+          let vid = document.getElementById('clip');
+          vid.muted = true;
+          vid.play();
 
           player.start(seq, 120).then(() => {
+
+            finalChords = [];
+            leadInstruments = [];
+            bassInstruments = [];
+
+            vid.load();
+
+            soundArr.forEach(assignChords);
+            
             document.getElementById('play').disabled = false;
             count = 0;
             seq = { 
               quantizationInfo: {stepsPerQuarter: 4},
               notes: [],
               totalQuantizedSteps: 1
-            };         
+            };
           });
         });      
       }
@@ -113,8 +125,8 @@ model.initialize().then(() => {
 // Play when play button is clicked.
 document.getElementById('play').onclick = () => {
 
+  console.log(soundArr);
   document.getElementById('play').disabled = true; 
-  //mm.Player.tone.context.resume();
   player.resumeContext();
   player.stop();
   startChords(finalChords, leadInstruments, bassInstruments);
