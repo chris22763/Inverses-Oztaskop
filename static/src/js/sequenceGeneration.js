@@ -114,7 +114,8 @@ model.initialize().then(() => {
 document.getElementById('play').onclick = () => {
 
   document.getElementById('play').disabled = true; 
-  mm.Player.tone.context.resume();
+  //mm.Player.tone.context.resume();
+  player.resumeContext();
   player.stop();
   startChords(finalChords, leadInstruments, bassInstruments);
 }
