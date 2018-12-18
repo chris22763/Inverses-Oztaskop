@@ -155,17 +155,17 @@ def index():
 
     if request.method == 'POST':
         p = request.form
-        print(p)
-        print(loaded)
-        if loaded:
-            if p['select'] != '0':
-                i = int(p['select'])
-                #sound = data[i]
-                sound  = convert_data(i)
-                video_path = paths[i]
+        #print(p)
+        #print(loaded)
+        if p['select'] != '0':
+            i = int(p['select'])
+            sound = data[i]
+            print(sound)
+            #sound  = convert_data(i)
+            video_path = paths[i]
 
-            #p = multiprocessing.Pool(1)
-            #result = p.apply_async(convert_data)
+        #p = multiprocessing.Pool(1)
+        #result = p.apply_async(convert_data)
 
         loaded = True
 
