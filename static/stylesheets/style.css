@@ -19,6 +19,18 @@ p{
     font-style: normal;
     font-size: 14px;
 }
+
+.p{
+    position: absolute;
+    float: left;
+    bottom: 20%;
+    left: 20%;
+    font-family: proxima-nova, sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 14px;
+}
+
 #text{
     position: absolute;
     float:left;
@@ -31,7 +43,7 @@ p{
     float:left;
     bottom: 30%;
     left: -20px;
-    width: auto;
+    width: 15%;
     height: auto;
     padding: 10px;
     padding-left: 30px;
@@ -68,6 +80,22 @@ p{
     z-index:1;
     width:auto;
 }
+
+#play{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+}
+
+#playlabel{
+    position: absolute;
+    float: left;
+    bottom: 20%;
+    left: 80%;
+    z-index:1;
+    width:auto;
+}
+
 .bar{
     position: absolute;
     float: left;
