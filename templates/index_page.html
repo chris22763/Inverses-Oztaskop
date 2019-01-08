@@ -5,17 +5,7 @@
         <link rel="stylesheet" href="https://use.typekit.net/hwh1fyz.css">
 
         <title>AVPRG_Projekt</title>
-        <!--
-        das ist der array-->
 
-        <!--
-        <script type="text/javascript">
-            window.appConfig = {
-                sound_list: {{sound_list | safe}}
-                .{{video_path}}
-            };
-        </script>
-        <!-->
         <script type="text/javascript">
             window.appConfig = {
                 sound_list: {{sound_list | safe}}
@@ -48,11 +38,11 @@
                 <!--surround the select box with a "custom-select" DIV element. Remember to set the width:-->
                 <div class="custom-select bar" style="width:200px;">
                     <select name="select" formmethod="POST" onchange="document.form1.submit()">
-                        <option value="0">Select a Clip:</option>
-                        <option value="1">short test</option>
-                        <option value="2">Gerri's Game</option>
-                        <option value="3">Blade Runner</option>
-                        <option value="4">LOTR</option>
+                        <option>Select a Clip:</option>
+                        <option value="0">short test</option>
+                        <option value="1">Gerri's Game</option>
+                        <option value="2">Blade Runner</option>
+                        <option value="3">LOTR</option>
                     </select>
                 </div>
             </form>
