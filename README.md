@@ -16,9 +16,12 @@ $ python3 main.py
 Auf Windows muss man erst eine eigne venv kreieren und notwendige libaries installieren.
 Das geht mit :
 
-python -m venv env
-source env/bin/activate
+python -m venv env 
+
+source env/bin/activate 
+
 pip install -r requirements.txt
+
 
 python3 - main.py
 
