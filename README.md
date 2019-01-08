@@ -23,7 +23,7 @@ source env/bin/activate
 pip install -r requirements.txt
 
 
-python3 - main.py
+python3 -m main.py
 ```
 
 jetzt kann man im Browser (wir haben mit Chrome gearbeitet) zu http://127.0.0.1:5000/ navigieren.
