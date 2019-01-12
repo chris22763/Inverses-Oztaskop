@@ -22,7 +22,7 @@ Installation:
   Windows (requires adding python and virtualenv to your PATH):
   ```
   virtualenv venv
-  venv/Scripts/activate.bat 
+  venv\Scripts\activate.bat 
   pip install -r requirements.txt
 
   python main.py
