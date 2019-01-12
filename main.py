@@ -1,15 +1,9 @@
 import os
 import random
-import midi
 import cv2
 import time
 import numpy as np
-from os import listdir
-from os.path import isfile, join
-from flask import Flask, render_template, request, send_from_directory, redirect, url_for, session, escape
-import multiprocessing
-import matplotlib.pyplot as plt
-
+from flask import Flask, render_template, request, session
 
 
 PATH = "./static/video_files/short_test.mp4"
@@ -105,7 +99,7 @@ def convert_data(i):
         c += 1
         try:
             ret, frame = cap.read()
-
+            print(ret)
             img = resize_frame(frame)
 
             cache = mean_data_over_time(img, cache, vis)
@@ -154,7 +148,7 @@ def index():
             # the output data was stored in the list 'data' so on presentation we could skip the calculation step
             # if someone want to try it for them self you just need to uncomment line 157 and comment line 159
 
-            # sound  = convert_data(i)
+            #sound  = convert_data(i)
 
             sound = data[i]
             video_path = paths[i]
