@@ -17,9 +17,9 @@ Installation:
   ```
   $ virtualenv venv
   $ source venv/bin/activate
-  $ pip install -r requirements.txt
+  (venv) $ pip install -r requirements.txt
   
-  $ python3 main.py
+  (venv) $ python3 main.py
   ```
 
   Windows (requires adding virtualenv to your PATH):
