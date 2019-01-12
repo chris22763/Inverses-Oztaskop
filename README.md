@@ -24,10 +24,10 @@ Installation:
 
   Windows (requires adding python and virtualenv to your PATH):
   ```
-  virtualenv venv
-  venv\Scripts\activate.bat 
-  pip install -r requirements.txt
+  $ virtualenv venv
+  $ venv\Scripts\activate.bat 
+  (venv) $ pip install -r requirements.txt
 
-  python main.py
+  (venv) $ python main.py
   ```
 - Open a browser at http://127.0.0.1:5000/ to try it out
