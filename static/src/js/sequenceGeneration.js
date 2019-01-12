@@ -23,6 +23,7 @@ function continueSequence(currentChords, leadInstrument, bassInstrument, playIt)
   
   const chords = currentChords;
 
+  // continue the sequence based on the current chords
   model.continueSequence(seq, STEPS_PER_PROG + (NUM_REPS-1)*STEPS_PER_PROG - 1, 0.9, chords)
     .then((contSeq) => {
       // Add the continuation to the original.
@@ -78,21 +79,22 @@ function continueSequence(currentChords, leadInstrument, bassInstrument, playIt)
 
           player.start(seq, 120).then(() => {
 
+            //reset all important variables
             finalChords = [];
             leadInstruments = [];
             bassInstruments = [];
-
-            vid.load();
-
-            soundArr.forEach(assignChords);
-            
-            document.getElementById('play').disabled = false;
             count = 0;
             seq = { 
               quantizationInfo: {stepsPerQuarter: 4},
               notes: [],
               totalQuantizedSteps: 1
             };
+
+            vid.load();
+
+            soundArr.forEach(assignChords); // generate set of new chords           
+
+            document.getElementById('play').disabled = false;
           });
         });      
       }
@@ -108,7 +110,7 @@ function startChords(chordArray, leadInstruments, bassInstruments) {
 
     if(i == ((chordArray.length / 4) - 1)) {
       
-      continueSequence(chordProgression, leadInstruments[i], bassInstruments[i], true);
+      continueSequence(chordProgression, leadInstruments[i], bassInstruments[i], true); // last call before playing
     }
     else {
       continueSequence(chordProgression, leadInstruments[i], bassInstruments[i]);
@@ -125,7 +127,6 @@ model.initialize().then(() => {
 // Play when play button is clicked.
 document.getElementById('play').onclick = () => {
 
-  console.log(soundArr);
   document.getElementById('play').disabled = true; 
   player.resumeContext();
   player.stop();

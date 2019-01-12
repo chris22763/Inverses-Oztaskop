@@ -1,12 +1,14 @@
 const majorScales = ['major', 'mixolydian', 'lydian', 'phrygian dominant', 'harmonic major', 'major pentatonic', 'whole tone'];
 const minorScales = ['aeolian', 'dorian', 'harmonic minor', 'melodic minor', 'phrygian', 'minor pentatonic', 'minor hexatonic', 'prometheus'];
 const notes = Tonal.Note.names(); // Array 0-16 ("C", "C#", "Db", ...)
-const instruments = []; // populated by getInstruments via JSON
+const instruments = []; // populated by getInstruments() via JSON
 
 let finalChords = [];
 let leadInstruments = [];
 let bassInstruments = [];
 
+// populate arrays for the chords, lead and bass instruments respectively based on input array's colors
+// note: threshold values were found by analizing the output of test arrays
 function assignChords(array) {
 
     let chosenScale;
@@ -31,31 +33,33 @@ function assignChords(array) {
         
     }
 
-    avgH /= array.length;
-    avgS /= array.length;
-    avgL /= array.length;
+    // average value for hue, saturation and lightness
+    avgH /= array.length; 
+    avgS /= array.length; 
+    avgL /= array.length; 
 
-    let minMaxH = Math.max(...h) - Math.min(...h);
-    let minMaxS = Math.max(...s) - Math.min(...s);
-    let minMaxL = Math.max(...l) - Math.min(...l);
+    // average of smallest and biggest value for hue, saturation and lightness
+    let minMaxH = (Math.max(...h) + Math.min(...h)) / 2;
+    let minMaxS = (Math.max(...s) + Math.min(...s)) / 2;
+    let minMaxL = (Math.max(...l) + Math.min(...l)) / 2;
 
-    h.sort();
+    // median value for hue, saturation and lightness
+    h.sort();  
+    let medianH = h[(array.length - 1) / 2];
     s.sort();
+    let medianS = s[(array.length - 1) / 2];
     l.sort();
-
-    let meanH = h[(array.length - 1) / 2];
-    let meanS = s[(array.length - 1) / 2];
-    let meanL = l[(array.length - 1) / 2];
+    let medianL = l[(array.length - 1) / 2];
 
     let avgMinMaxH = (avgH + minMaxH) / 2;
-    let diffH = Math.floor(Math.abs(avgMinMaxH - meanH));
+    let diffH = Math.floor(Math.abs(avgMinMaxH - medianH));
+    let diffL = Math.floor(Math.abs(medianL - avgL));
 
-    let diffL = Math.floor(Math.abs(meanL - avgL));
-
-    let rnd1 = Math.round(Math.random());
+    // used to get more variance when repeating with the same input data
+    let rnd1 = Math.round(Math.random()); 
     let rnd2 = Math.round(Math.random());
 
-    if(diffH < 30) {
+    if(diffH < 38) {
 
         if(avgS > 66) {
 
@@ -297,7 +301,7 @@ function assignChords(array) {
     for (let i = 0; i < 4; i++) {
 
         if(fittingChords[i] == '69#11') {
-            finalChords.push(notes[i] + fittingChords[fittingChords.length - 1]);
+            finalChords.push(notes[i] + fittingChords[fittingChords.length - 1]); // workaround for a bug with this chord
         }
         else {
             finalChords.push(notes[i] + fittingChords[i]);
@@ -305,6 +309,7 @@ function assignChords(array) {
     }
 }
 
+// shuffles a given input array
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -312,6 +317,7 @@ function shuffleArray(array) {
     }
 }
 
+// convert a RGB-color to a HSL-color
 function rgbToHsl(array) {
 
     r = array[0];
@@ -345,6 +351,7 @@ function rgbToHsl(array) {
     return [ h, s, l ];
 }
 
+// populate the instruments array via provided JSON from magenta.js
 function getInstruments() {
 
     const url = 'https://storage.googleapis.com/magentadata/js/soundfonts/sgm_plus/soundfont.json';
@@ -378,6 +385,7 @@ function getInstruments() {
 
 getInstruments();
 
+// get the RGB-color array created by opencv
 const soundArr = appConfig.sound_list;
 console.log(soundArr)
 soundArr.forEach(assignChords);
