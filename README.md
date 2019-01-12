@@ -1,30 +1,32 @@
 # Inverses-Oztaskop
 
-Das Inverse-Oztaskop ist, in anlehnung an den Walter Moers Roman "Rumo", 
-ein program um sichtbares Licht in Geräusche um zu wandeln.
+Das inverse Oztaskop ist, in Anlehnung an den Roman "Rumo & Die Wunder im Dunkeln" von Walter Moers, 
+ein Programm um Farben in Töne zu wandeln.
+(Für weitere Informationen siehe: http://de.zamonien.wikia.com/wiki/Oztaskop)
 
-Wenn man es ausprobieren möchte muss man nur sicher gehen das man Python3 und Virtualenv installiert hat,
-sollte per default auf den meisten systemen vorhanden sein.
+Requirements:
+- Python3
+- virtualenv
+- Browser with Web Audio API support (https://caniuse.com/#feat=audio-api)
 
-Dann navigiert man per terminal/shell zu dem Ordner 'Inverses-Oztaskop' den man sich hier herunterladen kann.
-Dann muss man die Virtualenv aktivieren.
-Auf MacOSX/Linux:
+Installation:
+- Download or clone the repository
+- Run a terminal from the resulting folder, activate the virtualenv and start main.py
 
-$ source venv/bin/activate
-$ python3 main.py
+  MacOSX/Linux:
+  ```
+  $ source venv/bin/activate
+  $ pip install -r requirements.txt
+  
+  $ python3 main.py
+  ```
 
-Auf Windows muss man erst eine eigne venv kreieren und notwendige libaries installieren.
-Das geht mit :
+  Windows (requires adding python and virtualenv to your PATH):
+  ```
+  virtualenv venv
+  venv\Scripts\activate.bat 
+  pip install -r requirements.txt
 
-python -m venv env
-source env/bin/activate
-pip install -r requirements.txt
-
-python3 - main.py
-
-
-jetzt kann man im Browser (wir haben mit Chrome gearbeitet) zu http://127.0.0.1:5000/ navigieren.
-und sich unser Projekt anschauen.
-
-
-Viel spaß mit unserem AVPRG Projekt
+  python main.py
+  ```
+- Open a browser at http://127.0.0.1:5000/ to try it out
