@@ -22,7 +22,7 @@ Installation:
   $ python3 main.py
   ```
 
-  Windows (requires adding python and virtualenv to your PATH):
+  Windows (requires adding virtualenv to your PATH):
   ```
   $ virtualenv venv
   $ venv\Scripts\activate.bat 
