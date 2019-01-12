@@ -19,12 +19,12 @@ Installation:
   $ python3 main.py
   ```
 
-  Windows:
+  Windows (requires adding python and virtualenv to your PATH):
   ```
-  python -m venv env 
-  source env/bin/activate 
+  virtualenv venv
+  venv/Scripts/activate.bat 
   pip install -r requirements.txt
 
-  python3 -m main.py
+  python main.py
   ```
 - Open a browser at http://127.0.0.1:5000/ to try it out
