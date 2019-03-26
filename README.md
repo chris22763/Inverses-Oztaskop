@@ -32,6 +32,7 @@ Installation:
   ```
 - Open a browser at http://127.0.0.1:5000/ to try it out
 
-Use your own content:
+How to use your own content:
 - go to Inverses-Oztaskop/static/video_files/ and put your video file their. 
-- the easiest way would be to change your filename to one that allready exist.
+- rename your file to a name that allready exist. 
+- now it should work, if it doesn't restart your server and it's done.
