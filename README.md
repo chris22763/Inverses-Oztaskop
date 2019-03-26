@@ -36,3 +36,5 @@ How to use your own content:
 - go to Inverses-Oztaskop/static/video_files/ and put your video file their. 
 - rename your file to a name that allready exist. 
 - now it should work, if it doesn't restart your server and it's done.
+
+  to get the best results use videos with 720p and 24fps 
