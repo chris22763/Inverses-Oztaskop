@@ -31,3 +31,7 @@ Installation:
   (venv) $ python main.py
   ```
 - Open a browser at http://127.0.0.1:5000/ to try it out
+
+Use your own content:
+- go to Inverses-Oztaskop/static/video_files/ and put your video file their. 
+- the easiest way would be to change your filename to one that allready exist.
