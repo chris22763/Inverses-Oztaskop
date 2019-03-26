@@ -148,9 +148,9 @@ def index():
             # the output data was stored in the list 'data' so on presentation we could skip the calculation step
             # if someone want to try it for them self you just need to uncomment line 157 and comment line 159
 
-            #sound  = convert_data(i)
+            sound  = convert_data(i)
 
-            sound = data[i]
+            #sound = data[i]
             video_path = paths[i]
 
     return render_template('index_page.html', sound_list=sound, video_path=video_path)
